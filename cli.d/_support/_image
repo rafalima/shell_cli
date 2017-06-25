@@ -1,0 +1,49 @@
+#!/bin/bash
+
+use 'support/_file'
+
+function _pdf_converter() {
+	local folder_to_save="/tmp/pdf_tmp_folder"
+	local new_file_name="${1}.pdf"
+
+	if [[ ! -d ${folder_to_save} ]]; then
+		mkdir $folder_to_save
+	fi
+
+	for file in `ls`;
+	do
+		if [[ -f $file ]]; then
+			if [[ ${#file} -eq 5 ]]; then
+				mv $file "0$file"
+			fi
+		fi
+	done
+
+	convert * $new_file_name
+
+	mv $new_file_name $folder_to_save
+	
+}
+
+
+function convert_image_to_pdf() {
+	local folder_to_save="/tmp/pdf_tmp_folder"
+	local folder_path=${1}
+
+	cd ${folder_path}
+
+	for dir in `ls`;
+	do
+		if [[ -d $dir ]]; then
+			cd $dir
+			current_folder=${PWD##*/}
+
+			_pdf_converter $current_folder
+			cd ..
+		fi
+		
+	done
+
+	open $folder_to_save
+
+}

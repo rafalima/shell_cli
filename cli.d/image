@@ -1,0 +1,18 @@
+#!/bin/bash
+# vim: ft=sh
+
+use 'support/_image'
+
+SUBCOMMAND_DESC='Image helper'
+SUBCOMMAND_HELP=$(cat <<EOH
+convert-pdf [folder_path] 		Converts to pdf all images in a folder and its children
+EOH
+)
+
+case ${1} in
+  convert-pdf)
+	local folder_path=${@:2}
+
+	convert_image_to_pdf ${folder_path}
+  ;;
+esac

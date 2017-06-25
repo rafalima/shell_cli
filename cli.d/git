@@ -1,0 +1,99 @@
+#!/bin/bash
+# vim: ft=sh
+
+SUBCOMMAND_DESC="\tHelper for some git operations"
+SUBCOMMAND_HELP=$(cat <<EOH
+update|u                           Updates all repos it can find
+fetch|f                            Fetch all repos from origin but not update them
+status|s                           Gives you a quick status for your repos and modified files
+clone                              Will clone all relevant repos but 'dev-cli' in your projects
+                                   (parent of 'dev cli') directory.
+config                             List user.name and user.email on each project repo.
+config-user [USERNAME]             Set user.name to [USERNAME] on all repos.
+config-email [EMAIL]               Set user.email to [EMAIL] on all repos.
+
+EOH
+)
+
+function _check_for_sweepwip() {
+  type -a sweepwip &> /dev/null
+  [[ $? != 0 ]] && error "Can't find sweepwip on your PATH, run ${MAIN_COMMAND} setup check for more info."
+}
+
+function _call_sweepwip_with() {
+  local options=${1}
+  sweepwip -d ${_PROJ_DIR} ${options}
+}
+
+_KNOWN_REPOS="
+
+"
+
+_PROJ_DIR=${ROOT_DIR}/../
+
+case ${1} in
+  update|u)
+    _check_for_sweepwip
+    _call_sweepwip_with -fabu
+  ;;
+  fetch|f)
+    _check_for_sweepwip
+    _call_sweepwip_with -fab
+  ;;
+  status|s)
+    _check_for_sweepwip
+    _call_sweepwip_with -abl
+  ;;
+  clone)
+    in_cyan "Cloning all repos into ${PROJECTS_DIR}"
+    (cd ${PROJECTS_DIR};
+    for repo in ${_KNOWN_REPOS}; do
+      git clone ${repo}
+    done
+    )
+  ;;
+  config)
+    (repos_dir=`find -L "${PROJECTS_DIR}"  -type d -name '.git'`
+    for repo in ${repos_dir}; do
+      cd $repo/..
+      in_cyan "$(basename `pwd`)"
+      user_name=$(git config user.name)
+      user_email=$(git config user.email)
+      [[ -z $user_name ]] && in_red "\tuser.name is empty" || in_green "\tuser.name $user_name"
+      [[ -z $user_email || $user_email == "(none)" ]] && in_red "\tEmpty user.email" || in_green "\tuser.email $user_email"
+    done
+    )
+  ;;
+  config-user)
+    local username="${@:2}"
+    if [[ -z $username ]]; then
+      in_red "You need to provide an user name. Use ${MAIN_COMMAND} git config-user \"username\""
+      exit 1;
+    fi
+
+    (repos_dir=`find -L "${PROJECTS_DIR}"  -type d -name '.git'`
+    for repo in ${repos_dir}; do
+      cd $repo/..
+      in_cyan "$(basename `pwd`)"
+      git config --replace-all user.name "$username"
+      in_green "\tuser.name is now `git config user.name`"
+    done
+    )
+  ;;
+  config-email)
+    email="${@:2}"
+    if [ -z $email ]; then
+      in_red "You need to provide an email. Ex.: ${MAIN_COMMAND} git config-email \"email@example.com\""
+      exit 1;
+    fi
+
+    (repos_dir=`find -L "${PROJECTS_DIR}"  -type d -name '.git'`
+    for repo in ${repos_dir}; do
+      cd $repo/..
+      in_cyan "$(basename `pwd`)"
+      git config --replace-all user.email "$email"
+      in_green "\tuser.email is now `git config user.email`"
+    done
+    )
+  ;;
+esac

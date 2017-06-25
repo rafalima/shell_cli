@@ -1,0 +1,16 @@
+# vim: ft=sh
+
+SUBCOMMAND_DESC="\t\tFunctions to check if dependencies are installed"
+
+function _check_if_installed() {
+  local command=${1}
+  local helpmsg=${2:-"please install it"}
+
+  type -a ${command} &> /dev/null
+
+  if [[ $? -ne 0 ]]; then
+    _nok "${command} isn't installed in this machine \n${helpmsg}"
+  else
+    _ok "${command} is installed"
+  fi
+}

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+SUBCOMMAND_DESC="\t\tFunctions related to handling files"
+
+function get_properties() {
+	local property_name=${1}
+
+	echo $(grep ${property_name} resources/properties | cut -d "=" -f2)
+}
