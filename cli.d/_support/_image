@@ -14,7 +14,7 @@ function _fix_files_name() {
 }
 
 function _pdf_converter() {
-	local folder_to_save="/tmp/pdf_tmp_folder"
+	local folder_to_save=$(get_properties pdf_tmp_folder)
 	local new_file_name="${1}.pdf"
 
 	if [[ ! -d ${folder_to_save} ]]; then
@@ -48,7 +48,7 @@ function _convert_images() {
 
 
 function _convert_image_to_pdf() {
-	local folder_to_save="/tmp/pdf_tmp_folder"
+	local folder_to_save=$(get_properties pdf_tmp_folder)
 	local folder_path=${1}
 
 	cd ${folder_path}

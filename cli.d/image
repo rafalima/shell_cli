@@ -9,6 +9,9 @@ convert-pdf [folder_path] 		Converts to pdf all images in a folder and its child
 EOH
 )
 
+PROJECT_NAME="shell_cli"
+PROJECT_DIR="${PROJECTS_DIR}/${PROJECT_NAME}"
+
 case ${1} in
   convert-pdf)
 	local folder_path=${@:2}
