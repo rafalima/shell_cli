@@ -11,18 +11,7 @@ EOH
 
 case ${1} in
   check)
-    # in_cyan ">> dependencies for Persanal machine <<"
-    # _check_if_installed "gradle" "Gradle was not found. You can install gradle from homebrew 'brew install gradle'."
-    # _check_if_installed "jq" "jq was not found. You can install gradle from homebrew 'brew install jq'."
-    # _check_if_installed "http" "Httpie was not found. You can install httpie from homebrew 'brew install httpie'."
-    # _check_if_etc_hosts_is_writable "You should have WRITE permissions to /etc/hosts"
-    # in_cyan ">> dependencies for Demand Forecast <<"
-    # _check_if_installed "java" "Java JDK 8 is not installed"
-    # in_cyan ">> dependencies for demand-forecast-manager <<"
-    # _check_if_installed "virtualbox" "Virtualbox is not installed"
-    # _check_if_installed "VBoxManage" "VBoxManage is not installed"
-    # _check_if_installed "docker" "Docker is not installed"
-    # _check_if_installed "docker-machine" "Docker Machine is not installed"
-    # _check_if_docker_machine_created "docker machine default env is not created. You can install it using 'gdf docker create-machine'"
+    in_cyan ">> dependencies for Persanal machine <<"
+    _check_if_installed "convert" "Convert was not found. You can install gradle from homebrew 'brew install imagemagick'."
   ;;
 esac
