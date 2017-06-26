@@ -26,23 +26,30 @@ function _pdf_converter() {
 }
 
 
-function convert_image_to_pdf() {
+function _convert_images() {
+	for dir in `ls`;
+	do
+		if [[ -d $dir ]]; then
+			cd $dir
+
+			current_folder=${PWD##*/}
+
+			_pdf_converter $current_folder
+			
+			cd ..
+		fi
+		
+	done
+}
+
+
+function _convert_image_to_pdf() {
 	local folder_to_save="/tmp/pdf_tmp_folder"
 	local folder_path=${1}
 
 	cd ${folder_path}
 
-	for dir in `ls`;
-	do
-		if [[ -d $dir ]]; then
-			cd $dir
-			current_folder=${PWD##*/}
-
-			_pdf_converter $current_folder
-			cd ..
-		fi
-		
-	done
+	_convert_images
 
 	open $folder_to_save
 

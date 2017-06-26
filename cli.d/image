@@ -13,6 +13,6 @@ case ${1} in
   convert-pdf)
 	local folder_path=${@:2}
 
-	convert_image_to_pdf ${folder_path}
+	_convert_image_to_pdf ${folder_path}
   ;;
 esac
