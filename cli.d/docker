@@ -1,0 +1,25 @@
+#!/bin/bash
+# vim: ft=sh
+
+SUBCOMMAND_DESC='Image helper'
+SUBCOMMAND_HELP=$(cat <<EOH
+rabbitmq		Starts a rabbitmq container
+javascript		Displayed javascript code to interact with rabbitmq
+EOH
+)
+
+PROJECT_NAME="shell_cli"
+PROJECT_DIR="${PROJECTS_DIR}/${PROJECT_NAME}"
+
+case ${1} in
+	rabbitmq)
+		docker rm -f $(docker ps -a -q)
+  		docker run -d --hostname my-rabbit --name some-rabbit2 -p 8080:15672 rabbitmq:3-management
+	;;
+  	javascript)
+		cd $PROJECT_DIR
+		in_cyan "Script copied to clipboard"
+		cat scripts/rabbitmq.js | pbcopy
+
+	;;
+esac

@@ -13,5 +13,6 @@ case ${1} in
   check)
     in_cyan ">> dependencies for Persanal machine <<"
     _check_if_installed "convert" "Convert was not found. You can install gradle from homebrew 'brew install imagemagick'."
+    _check_if_installed "docker" "Docker was not found. Get docker community edition"
   ;;
 esac
