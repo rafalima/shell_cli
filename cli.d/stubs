@@ -2,6 +2,7 @@
 # vim: ft=sh
 
 use 'support/_setup'
+use 'support/_file'
 
 SUBCOMMAND_DESC='Helper for setup your local environment'
 SUBCOMMAND_HELP=$(cat <<EOH
@@ -9,11 +10,15 @@ run       Run wiremock point to the mappings folder
 EOH
 )
 
+PROJECT_NAME="shell_cli"
+PROJECT_DIR="${PROJECTS_DIR}/${PROJECT_NAME}"
+
 WIREMOCK_PID_PATH=/tmp/wiremock_pid
 
 case ${1} in
   run)
-    java -jar wiremock-standalone-2.16.0.jar -port 9999 &
+    wiremock_jar=$(get_properties wiremock_jar)
+    java -jar $wiremock_jar -port 9999 &
     echo ${!} > ${WIREMOCK_PID_PATH}
   ;;
   stop)
