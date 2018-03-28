@@ -4,7 +4,7 @@
 use 'support/_setup'
 use 'support/_file'
 
-SUBCOMMAND_DESC='Helper for setup your local environment'
+SUBCOMMAND_DESC='Helper for dealing with stubs'
 SUBCOMMAND_HELP=$(cat <<EOH
 run       Run wiremock point to the mappings folder
 EOH

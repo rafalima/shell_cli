@@ -1,2 +1,5 @@
 pdf_tmp_folder=/tmp/pdf_tmp_folder
 wiremock_jar=${PROJECT_DIR}/resources/stubs/wiremock-standalone-2.16.0.jar
+wiremock_host=http://localhost:9999
+
+produto_endpoint=/produto/

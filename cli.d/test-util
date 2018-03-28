@@ -1,0 +1,29 @@
+#!/bin/bash
+# vim: ft=sh
+use 'support/_test_util'
+use 'support/_file'
+
+SUBCOMMAND_DESC='Helper for dealing with test environments'
+SUBCOMMAND_HELP=$(cat <<EOH
+id-validation       Validate the ids
+EOH
+)
+
+PROJECT_NAME="shell_cli"
+PROJECT_DIR="${PROJECTS_DIR}/${PROJECT_NAME}"
+VALID_ID_FILE="/tmp/valid_ids.txt"
+
+case ${1} in
+  id-validation)
+    ids_file=${2}
+
+    _clean_data ${VALID_ID_FILE}
+
+    _validate_ids ${ids_file}
+
+    if [[ -e ${VALID_ID_FILE} ]]; then
+      open ${VALID_ID_FILE}
+    fi
+    
+  ;;
+esac

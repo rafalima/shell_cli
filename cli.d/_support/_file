@@ -2,6 +2,22 @@
 
 SUBCOMMAND_DESC="\t\tFunctions related to handling files"
 
+function _file_to_array() {
+  local file=${1}
+
+  IFS=$'\n' read -d '' -r ids < ${file}
+  
+  echo ${ids[@]}
+}
+
+function _clean_data() {
+	local file=${1}
+
+	if [[ -e ${file} ]]; then
+		rm ${file}
+  fi
+}
+
 function get_properties() {
 	local property_name=${1}
 
