@@ -38,3 +38,11 @@ export PATH=$PATH:/path_to_your_root_folder/shell_cli
 ```
 
 Restart your terminal and be happy :D
+
+### Tutorials
+
+* Tutorial GIT - https://try.github.io/levels/1/challenges/1
+* GIT Documentação oficial - https://git-scm.com/docs/gittutorial
+* GIT Tutorial diversos - https://www.atlassian.com/git/tutorials
+* Shell Tutorial - https://www.shellscript.sh
+* Unix referência - http://www.tutorialspoint.com/unix/
