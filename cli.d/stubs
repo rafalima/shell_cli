@@ -6,7 +6,7 @@ use 'support/_file'
 
 SUBCOMMAND_DESC='Helper for dealing with stubs'
 SUBCOMMAND_HELP=$(cat <<EOH
-run       Run wiremock point to the mappings folder
+start       Run wiremock point to the mappings folder
 EOH
 )
 
@@ -16,12 +16,15 @@ PROJECT_DIR="${PROJECTS_DIR}/${PROJECT_NAME}"
 WIREMOCK_PID_PATH=/tmp/wiremock_pid
 
 case ${1} in
-  run)
+  start)
     wiremock_jar=$(get_properties wiremock_jar)
-    java -jar $wiremock_jar -port 9999 &
+    wiremock_files=$(get_properties wiremock_files)
+    
+    java -jar $wiremock_jar -port 9999 --root-dir ${wiremock_files} &
     echo ${!} > ${WIREMOCK_PID_PATH}
   ;;
   stop)
     kill -TERM $(cat ${WIREMOCK_PID_PATH})
+    rm ${WIREMOCK_PID_PATH}
   ;;
 esac
